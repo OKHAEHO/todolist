@@ -22,10 +22,18 @@ export default function App() {
   const loadToDos = async () => {
     try {
       const s = await AsyncStorage.getItem(STORAGE_KEY);
-      console.log(s, JSON.parse(s));
-      setToDos(JSON.parse(s));
-    } catch(s){
-      //save error
+  
+      if (s !== null) {
+        console.log(s, JSON.parse(s));
+        setToDos(JSON.parse(s));
+      } else {
+        // 데이터가 없을 경우에 대한 처리
+        console.log("No data found");
+        setToDos({});
+      }
+    } catch (error) {
+      console.error("Error loading todos:", error);
+      // 에러가 발생한 경우에 대한 처리
     }
   };
   
